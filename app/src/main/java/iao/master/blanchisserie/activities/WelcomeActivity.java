@@ -1,6 +1,5 @@
 package iao.master.blanchisserie.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
@@ -8,10 +7,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import iao.master.blanchisserie.R;
 
-public class WelcomeActivity extends Activity {
+public class WelcomeActivity extends AppCompatActivity {
 
     Button getStartedButton;
 
@@ -23,6 +23,8 @@ public class WelcomeActivity extends Activity {
 
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //show the activity in full screen
+
+        getSupportActionBar().hide();
 
         setContentView(R.layout.activity_welcome);
 
