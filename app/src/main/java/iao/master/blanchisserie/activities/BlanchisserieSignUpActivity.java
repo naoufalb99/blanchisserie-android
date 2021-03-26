@@ -7,10 +7,10 @@ import androidx.annotation.Nullable;
 
 import iao.master.blanchisserie.R;
 
-public class SignUpActivity extends Activity {
+public class BlanchisserieSignUpActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_signup);
     }
 }

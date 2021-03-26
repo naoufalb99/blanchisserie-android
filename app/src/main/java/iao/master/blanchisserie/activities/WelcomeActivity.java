@@ -28,7 +28,7 @@ public class WelcomeActivity extends Activity {
 
         getStartedButton = (Button) findViewById(R.id.button_get_started);
         getStartedButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, SignUpActivity.class));
+            startActivity(new Intent(this, BlanchisserieSignUpActivity.class));
         });
     }
 }
