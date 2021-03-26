@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:background="#0099ff"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:background="?attr/colorPrimary"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -12,13 +14,21 @@
         android:layout_marginEnd="30dp"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="14dp"
             android:text="Blanchisserie"
-            android:textColor="#FFF"
+            android:textColor="?attr/colorOnPrimary"
             android:textFontWeight="200"
             android:textSize="30sp" />
 
@@ -27,7 +37,9 @@
             android:layout_height="wrap_content"
             android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
             android:textAlignment="center"
-            android:textColor="#e3f3fe" />
+            android:textColor="?attr/colorOnPrimary"
+            android:layout_marginBottom="20dp"
+            />
 
         <Button
             android:id="@+id/button_get_started"
@@ -35,9 +47,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:backgroundTint="?attr/colorSecondary"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
-            android:text="Get started" />
+            android:text="Get started"
+            app:icon="@drawable/ic_east_24px"
+            app:iconGravity="end"
+            app:iconTint="?attr/colorOnSecondary"
+            app:iconPadding="8dp"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:textColor="?attr/colorOnSecondary" />
 
     </LinearLayout>
 </LinearLayout>
