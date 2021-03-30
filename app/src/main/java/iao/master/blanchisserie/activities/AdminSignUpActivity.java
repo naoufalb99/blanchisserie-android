@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +30,8 @@ public class AdminSignUpActivity extends AppCompatActivity {
     //settings var
     Settings setting;
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,14 +39,12 @@ public class AdminSignUpActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //show the activity in full screen
 
         //database params
-        Database db = Room.databaseBuilder(getApplicationContext(),
-                Database.class, "Blanchisserie").allowMainThreadQueries().build();
+        Database db = Database.getInstance(this);
         SettingsDao settingsDao = db.settingsDao();
 
 
         setContentView(R.layout.activity_signup);
         System.out.println("signup activity");
-
         nomInput = (EditText) findViewById(R.id.nomBlanchisserie);
         adresseInput = (EditText) findViewById(R.id.adresseBlanchisserie);
         numeroInput = (EditText) findViewById(R.id.numeroBlanchisserie);
@@ -60,9 +61,13 @@ public class AdminSignUpActivity extends AppCompatActivity {
             numero = numeroInput.getText().toString();
             email = emailInput.getText().toString();
 
+            if(nom.isEmpty() || adresse.isEmpty() || numero.isEmpty() || email.isEmpty()){
+                Toast.makeText(getApplicationContext(),"please fill in all the fields",Toast.LENGTH_SHORT).show();
+            }else{
+                settingsDao.insertSetting(nom,adresse,email,numero);
+            }
 
 
-            settingsDao.insertSetting(nom,adresse,email,numero);
 
         });
 
