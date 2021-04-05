@@ -16,8 +16,8 @@ public interface SettingsDao {
     @Update
     public void updateSetting(Settings setting);
 
-    @Delete
-    public void deleteSetting(Settings setting);
+    @Query("DELETE FROM settings")
+    public void deleteSettings();
 
     @Query("SELECT * FROM settings")
     public Settings[] getAllSettings();

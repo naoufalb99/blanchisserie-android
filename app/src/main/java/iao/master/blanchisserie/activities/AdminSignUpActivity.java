@@ -3,7 +3,6 @@ package iao.master.blanchisserie.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,12 +10,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import iao.master.blanchisserie.R;
 import iao.master.blanchisserie.daos.SettingsDao;
 import iao.master.blanchisserie.database.Database;
 import iao.master.blanchisserie.models.Settings;
+
 
 
 public class AdminSignUpActivity extends AppCompatActivity {
@@ -43,6 +42,7 @@ public class AdminSignUpActivity extends AppCompatActivity {
         SettingsDao settingsDao = db.settingsDao();
 
 
+
         setContentView(R.layout.activity_signup);
         System.out.println("signup activity");
         nomInput = (EditText) findViewById(R.id.nomBlanchisserie);
@@ -65,6 +65,8 @@ public class AdminSignUpActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"please fill in all the fields",Toast.LENGTH_SHORT).show();
             }else{
                 settingsDao.insertSetting(nom,adresse,email,numero);
+                startActivity(new Intent(this, HomeActivity.class));
+
             }
 
 
