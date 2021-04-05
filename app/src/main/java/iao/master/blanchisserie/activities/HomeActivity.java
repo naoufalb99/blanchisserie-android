@@ -12,10 +12,10 @@ import iao.master.blanchisserie.R;
 import iao.master.blanchisserie.daos.SettingsDao;
 import iao.master.blanchisserie.database.Database;
 
-
 public class HomeActivity extends AppCompatActivity {
 
     Button delete;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

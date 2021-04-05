@@ -13,10 +13,13 @@ import iao.master.blanchisserie.models.Settings;
 public abstract class Database extends RoomDatabase {
     private static Database db;
 
-    public static synchronized Database getInstance(Context context){
-        if(db == null){
+    public static synchronized Database getInstance(Context context) {
+        if (db == null) {
             db = Room.databaseBuilder(context,
-                    Database.class, "Blanchisserie").allowMainThreadQueries().build();
+                    Database.class, "Blanchisserie")
+                    .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
+                    .build();
         }
         return db;
     }
