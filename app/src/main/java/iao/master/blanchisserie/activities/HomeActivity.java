@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import iao.master.blanchisserie.R;
-import iao.master.blanchisserie.daos.SettingsDao;
+import iao.master.blanchisserie.daos.BlanchisserieDao;
 import iao.master.blanchisserie.database.Database;
 
 public class HomeActivity extends AppCompatActivity {
@@ -22,11 +22,11 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         Database db = Database.getInstance(this);
-        SettingsDao settingsDao = db.settingsDao();
+        BlanchisserieDao blanchisserieDao = db.settingsDao();
 
         delete = (Button) findViewById(R.id.delete);
         delete.setOnClickListener(v -> {
-            settingsDao.deleteSettings();
+            blanchisserieDao.deleteSettings();
             startActivity(new Intent(this, WelcomeActivity.class));
         });
     }

@@ -2,12 +2,11 @@ package iao.master.blanchisserie.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import iao.master.blanchisserie.daos.SettingsDao;
+import iao.master.blanchisserie.daos.BlanchisserieDao;
 import iao.master.blanchisserie.database.Database;
 import iao.master.blanchisserie.models.Settings;
 
@@ -28,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void activitiesScheduling() {
-        SettingsDao settingsDao = db.settingsDao();
-        Settings[] settings = settingsDao.getAllSettings();
+        BlanchisserieDao blanchisserieDao = db.settingsDao();
+        Settings[] settings = blanchisserieDao.getAllSettings();
 
         if(settings == null || settings.length == 0) {
             startWelcomeActivity();
