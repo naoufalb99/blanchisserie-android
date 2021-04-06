@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_baseline_home_24"
         android:title="Accueil"/>
     <item
-        android:id="@+id/menu_item_orders"
+        android:id="@+id/menu_item_commands"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_orders_24"
         android:title="Commandes"/>

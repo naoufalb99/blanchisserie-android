@@ -7,34 +7,65 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Objects;
 
 import iao.master.blanchisserie.R;
 import iao.master.blanchisserie.daos.BlanchisserieDao;
 import iao.master.blanchisserie.database.Database;
+import iao.master.blanchisserie.fragments.ClientsFragment;
+import iao.master.blanchisserie.fragments.CommandsFragment;
+import iao.master.blanchisserie.fragments.HomeFragment;
 
+// TODO: rename this activity
 public class HomeActivity extends AppCompatActivity {
 
-    Button delete;
+    BottomNavigationView bottomNavigation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Database db = Database.getInstance(this);
-        BlanchisserieDao blanchisserieDao = db.blanchisserieDao();
+        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
-        delete = (Button) findViewById(R.id.delete);
-        delete.setOnClickListener(v -> {
-            blanchisserieDao.deleteSettings();
-            startActivity(new Intent(this, WelcomeActivity.class));
-        });
+        configureBottomView();
+        selectFragment(new HomeFragment());
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Toast.makeText(this, "Home Activity", Toast.LENGTH_LONG).show();
+    private void configureBottomView() {
+        bottomNavigation.setOnNavigationItemSelectedListener(item -> updateMainFragment(item.getItemId()));
+    }
+
+    private void selectFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_container, fragment)
+                .commit();
+    }
+
+    private Boolean updateMainFragment(Integer itemId) {
+        Fragment selectedFragment;
+        switch(itemId) {
+            case R.id.menu_item_home:
+                selectedFragment = new HomeFragment();
+                break;
+            case R.id.menu_item_commands:
+                selectedFragment = new CommandsFragment();
+                break;
+            case R.id.menu_item_clients:
+                selectedFragment = new ClientsFragment();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + itemId);
+        }
+
+        selectFragment(selectedFragment);
+
+        return true;
     }
 
 }
