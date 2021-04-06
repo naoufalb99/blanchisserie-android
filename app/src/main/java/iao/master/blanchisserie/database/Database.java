@@ -30,7 +30,7 @@ public abstract class Database extends RoomDatabase {
         return db;
     }
 
-    public abstract BlanchisserieDao settingsDao();
+    public abstract BlanchisserieDao blanchisserieDao();
 
 
 }

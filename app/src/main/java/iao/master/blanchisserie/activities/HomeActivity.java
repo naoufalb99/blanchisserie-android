@@ -22,7 +22,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         Database db = Database.getInstance(this);
-        BlanchisserieDao blanchisserieDao = db.settingsDao();
+        BlanchisserieDao blanchisserieDao = db.blanchisserieDao();
 
         delete = (Button) findViewById(R.id.delete);
         delete.setOnClickListener(v -> {

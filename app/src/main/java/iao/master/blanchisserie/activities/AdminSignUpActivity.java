@@ -39,7 +39,7 @@ public class AdminSignUpActivity extends AppCompatActivity {
 
         //database params
         Database db = Database.getInstance(this);
-        BlanchisserieDao blanchisserieDao = db.settingsDao();
+        BlanchisserieDao blanchisserieDao = db.blanchisserieDao();
 
 
 

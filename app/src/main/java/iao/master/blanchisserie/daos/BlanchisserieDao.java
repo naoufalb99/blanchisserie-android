@@ -47,6 +47,8 @@ public interface BlanchisserieDao {
     public void deleteCommand (Commands command);
 
     //articles functions
+    @Query("select * from articles")
+    public Articles[] getAllArticles();
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertArticle(Articles article);
     @Update
