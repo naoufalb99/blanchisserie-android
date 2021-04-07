@@ -52,6 +52,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private void showNewCommandActivity() {
         // TODO: configure intent
+        //temporary intent
+        startActivity(new Intent(this, AddCommandOwner.class));
         Toast.makeText(this, "New Command", Toast.LENGTH_SHORT).show();
     }
 

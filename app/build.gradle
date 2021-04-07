@@ -39,11 +39,13 @@ dependencies {
 dependencies {
 
 
+    implementation 'androidx.wear:wear:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    compileOnly 'com.google.android.wearable:wearable:2.6.0'
     def room_version = "2.2.6"
 
     implementation "androidx.room:room-runtime:$room_version"
