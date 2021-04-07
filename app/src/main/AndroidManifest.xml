@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Blanchisserie">
-        <activity android:name=".activities.AddCommandActivity"></activity>
+
+
 
         <meta-data
             android:name="com.google.android.wearable.standalone"
@@ -30,6 +31,9 @@
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.AdminSignUpActivity" />
         <activity android:name=".activities.AddCommandOwner" />
+        <activity android:name=".activities.AddCommandActivity"/>
+
+        <activity android:name=".activities.NewCommandActivity" />
     </application>
 
 </manifest>

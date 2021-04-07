@@ -8,8 +8,10 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -27,19 +29,21 @@ public class HomeActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigation;
     FloatingActionButton floatingButtonNewCommand;
+    Toolbar topAppBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        topAppBar = (Toolbar) findViewById(R.id.topAppBar);
         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         floatingButtonNewCommand = (FloatingActionButton) findViewById(R.id.floating_action_button_new_command);
 
         configureBottomView();
         configureFloatingButtonNewCommand();
 
-        selectFragment(new HomeFragment());
+        selectMainFragment(new HomeFragment());
     }
 
     private void configureFloatingButtonNewCommand() {
@@ -47,17 +51,15 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void configureBottomView() {
+
         bottomNavigation.setOnNavigationItemSelectedListener(item -> updateMainFragment(item.getItemId()));
     }
 
     private void showNewCommandActivity() {
-        // TODO: configure intent
-        //temporary intent
-        startActivity(new Intent(this, AddCommandOwner.class));
-        Toast.makeText(this, "New Command", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, NewCommandActivity.class));
     }
 
-    private void selectFragment(Fragment fragment) {
+    private void selectMainFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frame_container, fragment)
@@ -70,7 +72,8 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.menu_item_home:
                 selectedFragment = new HomeFragment();
                 break;
-            case R.id.menu_item_commands:
+            case R.id.menu_item_settings:
+                // TODO: replace it with SettingsFragment
                 selectedFragment = new CommandsFragment();
                 break;
             case R.id.menu_item_clients:
@@ -80,7 +83,8 @@ public class HomeActivity extends AppCompatActivity {
                 throw new IllegalStateException("Unexpected value: " + itemId);
         }
 
-        selectFragment(selectedFragment);
+        topAppBar.setTitle(bottomNavigation.getMenu().findItem(itemId).getTitle());
+        selectMainFragment(selectedFragment);
 
         return true;
     }
