@@ -12,6 +12,9 @@ public class Clients {
     private String phone;
     private boolean subscribed;
 
+    public Clients() {
+    }
+
     public Clients(String name, String email, String phone, boolean subscribed) {
         this.name = name;
         this.email = email;

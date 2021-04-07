@@ -56,10 +56,14 @@ public class AddCommandOwner extends AppCompatActivity {
             email = emailInput.getEditText().getText().toString();
             phone = phoneInput.getEditText().getText().toString();
 
-            if(nom.isEmpty() || phone.isEmpty()  || email.isEmpty()){
+            if(nom.isEmpty() || phone.isEmpty()  || email.isEmpty() || subscribed == null){
                 Toast.makeText(getApplicationContext(),"please fill in all the fields",Toast.LENGTH_SHORT).show();
             }else{
                 Clients client = new Clients(nom,email,phone,subscribed);
+                Bundle clientInfo = setClientBundel(client);
+                Intent addCommandIntent = new Intent(this, AddCommandActivity.class);
+                addCommandIntent.putExtra("commandOwner",clientInfo);
+                startActivity(addCommandIntent);
             }
         });
 
@@ -71,9 +75,18 @@ public class AddCommandOwner extends AppCompatActivity {
     public void checked(View v){
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
-        if(radioButton.getText().toString().equals("abonne"))
+        if(radioButton.getText().toString().equals("Abonne"))
             subscribed=true;
-        else
+        else if(radioButton.getText().toString().equals("non-abonne"))
             subscribed=false;
+    }
+
+    public Bundle setClientBundel(Clients client){
+        Bundle clientBundel = new Bundle();
+        clientBundel.putString("nomClient",client.getName());
+        clientBundel.putString("emailClient",client.getEmail());
+        clientBundel.putString("phoneClient",client.getPhone());
+        clientBundel.putBoolean("subscribed",client.isSubscribed());
+        return clientBundel;
     }
 }
