@@ -2,6 +2,7 @@ package iao.master.blanchisserie.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 import android.widget.Button;
 
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
@@ -24,6 +26,7 @@ import iao.master.blanchisserie.fragments.HomeFragment;
 public class HomeActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigation;
+    FloatingActionButton floatingButtonNewCommand;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,13 +34,25 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        floatingButtonNewCommand = (FloatingActionButton) findViewById(R.id.floating_action_button_new_command);
 
         configureBottomView();
+        configureFloatingButtonNewCommand();
+
         selectFragment(new HomeFragment());
+    }
+
+    private void configureFloatingButtonNewCommand() {
+        floatingButtonNewCommand.setOnClickListener(v -> showNewCommandActivity());
     }
 
     private void configureBottomView() {
         bottomNavigation.setOnNavigationItemSelectedListener(item -> updateMainFragment(item.getItemId()));
+    }
+
+    private void showNewCommandActivity() {
+        // TODO: configure intent
+        Toast.makeText(this, "New Command", Toast.LENGTH_SHORT).show();
     }
 
     private void selectFragment(Fragment fragment) {
