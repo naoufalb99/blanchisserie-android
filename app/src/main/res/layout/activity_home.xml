@@ -6,10 +6,13 @@
     android:background="#FFFFFF"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar" android:id="@+id/toolbar" />
+
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
         android:layout_above="@id/bottom_navigation" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

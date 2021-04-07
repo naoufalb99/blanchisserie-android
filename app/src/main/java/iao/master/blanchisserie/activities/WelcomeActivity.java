@@ -24,7 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //show the activity in full screen
 
-        getSupportActionBar().hide();
+        if(getSupportActionBar() != null) getSupportActionBar().hide();
 
         setContentView(R.layout.activity_welcome);
 
