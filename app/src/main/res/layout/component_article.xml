@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="#F5F6F9"
+    android:layout_margin="10dp"
+    android:id="@+id/articleComponent">
+
+    <ImageView
+        android:id="@+id/articleIcon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/articleName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:textSize="25dp"
+        android:layout_marginLeft="30dp"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/counterContainer"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="70dp"
+        >
+
+        <Button
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/ic_minus"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="#000"
+            android:textSize="25dp"
+            android:layout_margin="20dp"/>
+
+        <Button
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/ic_add"
+            />
+    </LinearLayout>
+</LinearLayout>

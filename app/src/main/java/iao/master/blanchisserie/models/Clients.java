@@ -1,6 +1,7 @@
 package iao.master.blanchisserie.models;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "clients")
@@ -11,7 +12,7 @@ public class Clients {
     private String email;
     private String phone;
     private boolean subscribed;
-
+    @Ignore
     public Clients() {
     }
 
