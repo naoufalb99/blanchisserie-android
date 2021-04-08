@@ -58,13 +58,13 @@ public class MainActivity extends AppCompatActivity {
 
         if(articlesPresent == null || articlesPresent.length == 0 ){
             List<Articles> articles = new ArrayList<>();
-            Articles pantalon = new Articles("pantalon",20f,"imagePantalon");
+            Articles pantalon = new Articles("pantalon",20f,"image_pantalon");
             articles.add(pantalon);
-            Articles chemise = new Articles("chemise",15f,"imageChemise");
+            Articles chemise = new Articles("chemise",15f,"image_chemise");
             articles.add(chemise);
-            Articles jacket = new Articles("jacket",30f,"imageJacket");
+            Articles jacket = new Articles("jacket",30f,"image_jacket");
             articles.add(jacket);
-            Articles tricot = new Articles("tricot",25f,"imageTricot");
+            Articles tricot = new Articles("tricot",25f,"image_tricot");
             articles.add(tricot);
 
             for(Articles article : articles){
