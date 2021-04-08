@@ -15,12 +15,7 @@
         android:theme="@style/Theme.Blanchisserie">
 
 
-
-        <meta-data
-            android:name="com.google.android.wearable.standalone"
-            android:value="true" />
-
-        <activity android:name=".activities.AddCommandActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +26,7 @@
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.AdminSignUpActivity" />
         <activity android:name=".activities.AddCommandOwner" />
-        <activity android:name=".activities.MainActivity"/>
+<!--        <activity android:name=".activities.MainActivity"/>-->
 
         <activity android:name=".activities.NewCommandActivity" />
     </application>

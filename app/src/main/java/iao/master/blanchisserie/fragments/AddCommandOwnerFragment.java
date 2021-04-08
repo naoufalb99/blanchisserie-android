@@ -18,6 +18,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.EventListener;
 
 import iao.master.blanchisserie.R;
+import iao.master.blanchisserie.activities.MainActivity;
+import iao.master.blanchisserie.activities.NewCommandActivity;
 import iao.master.blanchisserie.models.Clients;
 
 
@@ -48,37 +50,39 @@ public class AddCommandOwnerFragment extends Fragment {
         phoneInput = view.findViewById(R.id.clientPhone);
 
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            if(checkedId == R.id.abonne){
+            if (checkedId == R.id.abonne) {
                 subscribed = true;
-            }else if(checkedId == R.id.nonAbonne) {
+            } else if (checkedId == R.id.nonAbonne) {
                 subscribed = false;
             }
         });
 
+        NewCommandActivity newCommandActivity = ((NewCommandActivity) getActivity());
+        newCommandActivity.getButtonContinue().setOnClickListener(v -> {
+            nom = nomInput.getEditText().getText().toString();
+            email = emailInput.getEditText().getText().toString();
+            phone = phoneInput.getEditText().getText().toString();
 
-//        buttonContinue.setOnClickListener(v -> {
-//
-//            nom = nomInput.getEditText().getText().toString();
-//            email = emailInput.getEditText().getText().toString();
-//            phone = phoneInput.getEditText().getText().toString();
-//
-//            if(nom.isEmpty() || phone.isEmpty()  || email.isEmpty()){
-//                Toast.makeText(getContext(),"please fill in all the fields",Toast.LENGTH_SHORT).show();
-//            }else{
-//                Clients client = new Clients(nom,email,phone,subscribed);
-//            }
-//        });
+            if (nom.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+                Toast.makeText(getContext(), "please fill in all the fields", Toast.LENGTH_SHORT).show();
+            } else {
+                Clients client = new Clients(nom, email, phone, subscribed);
+                newCommandActivity.setClient(client);
+                newCommandActivity.nextFragment();
+            }
+        });
+
 
     }
 
 
-    public void checked(View v){
+    public void checked(View v) {
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = v.findViewById(radioId);
-        if(radioButton.getText().toString().equals("abonne"))
-            subscribed=true;
+        if (radioButton.getText().toString().equals("abonne"))
+            subscribed = true;
         else
-            subscribed=false;
+            subscribed = false;
     }
 
 }
