@@ -31,6 +31,7 @@ public interface BlanchisserieDao {
     public Settings[] getAllSettings();
 
     //clients functions
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertClient(Clients client);
     @Update

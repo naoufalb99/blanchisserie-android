@@ -47,7 +47,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     compileOnly 'com.google.android.wearable:wearable:2.6.0'
     def room_version = "2.2.6"
-
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }
