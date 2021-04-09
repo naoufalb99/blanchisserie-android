@@ -22,42 +22,53 @@ public interface BlanchisserieDao {
 
     //settings functions
     @Query("INSERT INTO settings (nomBlanchisserie, adresse, email, numeroTelephone) VALUES (:nom,:adresse,:email,:numero)")
-    public void insertSetting(String nom, String adresse,String email, String numero);
+    public void insertSetting(String nom, String adresse, String email, String numero);
+
     @Update
     public void updateSetting(Settings setting);
+
     @Query("DELETE FROM settings")
     public void deleteSettings();
+
     @Query("SELECT * FROM settings")
     public Settings[] getAllSettings();
 
-    //clients functions
+
+    @Query("select * from clients")
+    public Clients[] getAllClients();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertClient(Clients client);
+
     @Update
     public void updateClient(Clients client);
+
     @Delete
-    public void deleteClient (Clients client);
+    public void deleteClient(Clients client);
+
 
     //commands functions
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertCommand(Commands command);
+
     @Update
     public void updateCommand(Commands command);
+
     @Delete
-    public void deleteCommand (Commands command);
+    public void deleteCommand(Commands command);
 
     //articles functions
     @Query("select * from articles")
     public Articles[] getAllArticles();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertArticle(Articles article);
+
     @Update
     public void updateArticle(Articles article);
+
     @Delete
-    public void deleteArticle (Articles article);
-
-
+    public void deleteArticle(Articles article);
 
 
     //transactions
