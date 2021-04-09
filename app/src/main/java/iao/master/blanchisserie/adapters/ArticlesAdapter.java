@@ -1,8 +1,6 @@
 package iao.master.blanchisserie.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import iao.master.blanchisserie.R;
-import iao.master.blanchisserie.activities.AddCommandActivity;
 import iao.master.blanchisserie.models.Articles;
 
 public class ArticlesAdapter  extends
@@ -65,6 +62,7 @@ public class ArticlesAdapter  extends
             public void onClick(View v) {
                 articlesQuantities.put(article.getName(),articlesQuantities.get(article.getName())+1);
                 holder.articleQuantity.setText(articlesQuantities.get(article.getName()).toString());
+
             }
         });
 
@@ -107,6 +105,9 @@ public class ArticlesAdapter  extends
 
 
 
+
+
+
         public ViewHolder(View itemView) {
             super(itemView);
             articleIcon = (ImageView) itemView.findViewById(R.id.articleIcon);
@@ -114,6 +115,7 @@ public class ArticlesAdapter  extends
             articleQuantity = (TextView) itemView.findViewById(R.id.article_quantity);
             addCounter = (Button) itemView.findViewById(R.id.plus_article);
             minusCounter = (Button) itemView.findViewById(R.id.minus_article);
+
 
             context = itemView.getContext();
 
