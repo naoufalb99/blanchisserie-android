@@ -1,146 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="#FFFFFF"
-    tools:context=".fragments.AddCommandOwnerFragment"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        android:paddingTop="50dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:text="Infos du Client" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="75dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/user" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_gravity="center"
-        android:paddingTop="20dp"
-        android:paddingBottom="50dp"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        >
+        tools:context=".fragments.AddCommandOwnerFragment">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nomClient"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nom"
-            android:layout_margin="10dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:orientation="vertical"
+            android:paddingTop="50dp"
+            android:paddingBottom="20dp">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <TextView
+                android:id="@+id/textView5"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Infos du Client"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="75dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/user" />
+        </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/clientEmail"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:layout_margin="10dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="50dp"
+            android:paddingTop="20dp"
+            android:paddingRight="50dp"
+            android:paddingBottom="50dp">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nomClient"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/clientPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Numero Telephone"
-            android:layout_margin="10dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:gravity="center">
-            <RadioButton
-                android:id="@+id/abonne"
-                android:layout_width="125dp"
                 android:layout_height="wrap_content"
-                android:text="Abonne" />
+                android:layout_margin="10dp"
+                android:hint="Nom">
 
-            <RadioButton
-                android:id="@+id/nonAbonne"
-                android:layout_width="125dp"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/clientEmail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="non-abonne"
-                android:checked="true"/>
-        </RadioGroup>
+                android:layout_margin="10dp"
+                android:hint="Email">
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_marginTop="30dp"-->
-<!--            android:orientation="horizontal">-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1" />
 
-<!--            <Button-->
-<!--                android:id="@+id/continuer"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:layout_marginStart="10dp"-->
-<!--                android:layout_marginEnd="4dp"-->
-<!--                android:text="continuer..." />-->
+            </com.google.android.material.textfield.TextInputLayout>
 
-<!--            <Button-->
-<!--                android:id="@+id/annuler"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:layout_marginStart="4dp"-->
-<!--                android:layout_marginEnd="10dp"-->
-<!--                android:text="Annuler"-->
-<!--                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>-->
-<!--        </LinearLayout>-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/clientPhone"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="Numero Telephone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/abonne"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:text="Abonne" />
+
+                <RadioButton
+                    android:id="@+id/nonAbonne"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="non-abonne" />
+            </RadioGroup>
+
+            <!--        <LinearLayout-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_gravity="center"-->
+            <!--            android:layout_marginTop="30dp"-->
+            <!--            android:orientation="horizontal">-->
+
+            <!--            <Button-->
+            <!--                android:id="@+id/continuer"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:layout_marginStart="10dp"-->
+            <!--                android:layout_marginEnd="4dp"-->
+            <!--                android:text="continuer..." />-->
+
+            <!--            <Button-->
+            <!--                android:id="@+id/annuler"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:layout_marginStart="4dp"-->
+            <!--                android:layout_marginEnd="10dp"-->
+            <!--                android:text="Annuler"-->
+            <!--                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>-->
+            <!--        </LinearLayout>-->
+
+        </LinearLayout>
+
 
     </LinearLayout>
-
-
-
-
-
-</LinearLayout>
+</ScrollView>

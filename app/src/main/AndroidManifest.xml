@@ -23,7 +23,9 @@
         <activity android:name=".activities.WelcomeActivity" />
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.AdminSignUpActivity" />
-        <activity android:name=".activities.NewCommandActivity" />
+        <activity
+            android:name=".activities.NewCommandActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

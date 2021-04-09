@@ -1,8 +1,12 @@
 package iao.master.blanchisserie.activities;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,12 +14,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.button.MaterialButton;
+
 import java.util.Enumeration;
 import java.util.Objects;
 import java.util.Vector;
 
 import iao.master.blanchisserie.R;
 import iao.master.blanchisserie.fragments.AddCommandArticlesFragment;
+import iao.master.blanchisserie.fragments.AddCommandDetailsFragment;
 import iao.master.blanchisserie.fragments.AddCommandOwnerFragment;
 import iao.master.blanchisserie.models.Clients;
 
@@ -27,7 +34,11 @@ public class NewCommandActivity extends AppCompatActivity {
     private Clients client;
 
     Toolbar topAppBar;
+
+    TextView textNewCommandPrice, textNewCommandTotal;
+
     Button buttonContinue;
+    Drawable buttonContinueIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +47,8 @@ public class NewCommandActivity extends AppCompatActivity {
 
         buttonContinue = (Button) findViewById(R.id.button_continue);
         topAppBar = (Toolbar) findViewById(R.id.topAppBar_new_command);
+        textNewCommandPrice = (TextView) findViewById(R.id.text_new_command_price);
+        textNewCommandTotal = (TextView) findViewById(R.id.text_new_command_total);
 
         loadFragmentsClasses();
         nextFragment();
@@ -46,6 +59,7 @@ public class NewCommandActivity extends AppCompatActivity {
         fragmentsClasses = new Vector<>();
         fragmentsClasses.add(AddCommandArticlesFragment.class);
         fragmentsClasses.add(AddCommandOwnerFragment.class);
+        fragmentsClasses.add(AddCommandDetailsFragment.class);
     }
 
     private void configureTopAppBar() {
@@ -76,15 +90,52 @@ public class NewCommandActivity extends AppCompatActivity {
         this.client = client;
     }
 
+    public Clients getClient() {
+        return client;
+    }
+
     public void nextFragment(){
         Boolean isFirst = currentFragmentIndex == -1;
-        if(currentFragmentIndex >= fragmentsClasses.size()) return;
+        if(currentFragmentIndex >= fragmentsClasses.size() - 1) return;
         try {
             Fragment fragment = fragmentsClasses.get(++currentFragmentIndex).newInstance();
             selectMainFragment(fragment, false);
         }catch (Exception e) {
             Log.e("NewCommandActivity", Objects.requireNonNull(e.getMessage()));
         }
+        if(currentFragmentIndex == fragmentsClasses.size() - 1) {
+            setupForFinalFragment();
+        } else {
+            resetSetupForFinalFragment();
+        }
+    }
+
+    private void resetSetupForFinalFragment() {
+        if(buttonContinueIcon != null) {
+            ((MaterialButton) buttonContinue).setIcon(buttonContinueIcon);
+            buttonContinueIcon = null;
+            buttonContinue.setText("Continuer");
+
+            ViewGroup.LayoutParams params = buttonContinue.getLayoutParams();
+            params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+            buttonContinue.setLayoutParams(params);
+
+            textNewCommandPrice.setVisibility(View.VISIBLE);
+            textNewCommandTotal.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setupForFinalFragment() {
+        buttonContinueIcon = ((MaterialButton) buttonContinue).getIcon();
+        ((MaterialButton) buttonContinue).setIcon(null);
+        buttonContinue.setText("Commander");
+
+        ViewGroup.LayoutParams params = buttonContinue.getLayoutParams();
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        buttonContinue.setLayoutParams(params);
+
+        textNewCommandPrice.setVisibility(View.GONE);
+        textNewCommandTotal.setVisibility(View.GONE);
     }
 
     public Boolean prevFragment() {
@@ -94,6 +145,11 @@ public class NewCommandActivity extends AppCompatActivity {
             selectMainFragment(fragment, false);
         }catch (Exception e) {
             Log.e("NewCommandActivity", Objects.requireNonNull(e.getMessage()));
+        }
+        if(currentFragmentIndex == fragmentsClasses.size() - 1) {
+            setupForFinalFragment();
+        } else {
+            resetSetupForFinalFragment();
         }
         return true;
     }
