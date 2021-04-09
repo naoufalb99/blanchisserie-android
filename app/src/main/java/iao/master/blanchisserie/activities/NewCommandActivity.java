@@ -3,8 +3,12 @@ package iao.master.blanchisserie.activities;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.view.ViewDebug;
+
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +34,7 @@ public class NewCommandActivity extends AppCompatActivity {
 
     private Vector<Class<? extends Fragment>> fragmentsClasses;
     private Integer currentFragmentIndex = -1;
+    private Float currentPrice=0f;
 
     private Clients client;
 
@@ -47,8 +52,12 @@ public class NewCommandActivity extends AppCompatActivity {
 
         buttonContinue = (Button) findViewById(R.id.button_continue);
         topAppBar = (Toolbar) findViewById(R.id.topAppBar_new_command);
+
         textNewCommandPrice = (TextView) findViewById(R.id.text_new_command_price);
         textNewCommandTotal = (TextView) findViewById(R.id.text_new_command_total);
+
+
+
 
         loadFragmentsClasses();
         nextFragment();
@@ -166,5 +175,20 @@ public class NewCommandActivity extends AppCompatActivity {
     public void onBackPressed() {
         currentFragmentIndex--;
         super.onBackPressed();
+    }
+
+    //update price
+     public void updatePrice(String op,float newPrice){
+
+        if(op.equals("add")){
+            currentPrice+=newPrice;
+            textNewCommandPrice.setText(currentPrice.toString()+" Dhs");
+        }else if(op.equals("sub")){
+            if(currentPrice>0){
+            currentPrice-=newPrice;
+            textNewCommandPrice.setText(currentPrice.toString()+" Dhs");
+            }
+        }
+
     }
 }

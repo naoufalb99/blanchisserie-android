@@ -49,14 +49,16 @@
             android:text="Total:" />
 
         <TextView
+
             android:id="@+id/text_new_command_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:text="0 Dhs"
             android:textAppearance="?attr/textAppearanceBody1"
-            android:textColor="?attr/colorPrimary"
-            android:text="90 Dhs" />
+            android:textColor="?attr/colorPrimary" />
+
 
         <Button
             android:id="@+id/button_continue"

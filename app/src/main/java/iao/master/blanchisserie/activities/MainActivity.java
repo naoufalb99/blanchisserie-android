@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setDefaultArticles(){
         BlanchisserieDao blanchisserieDao = db.blanchisserieDao();
-        Articles[] articlesPresent = blanchisserieDao.getAllArticles();
+        List<Articles> articlesPresent = blanchisserieDao.getAllArticles();
 
-        if(articlesPresent == null || articlesPresent.length == 0 ){
+        if(articlesPresent == null || articlesPresent.size() == 0 ){
             List<Articles> articles = new ArrayList<>();
             Articles pantalon = new Articles("pantalon",20f,"image_pantalon");
             articles.add(pantalon);

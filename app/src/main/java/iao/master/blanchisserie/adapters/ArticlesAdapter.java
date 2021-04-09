@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import iao.master.blanchisserie.R;
+import iao.master.blanchisserie.activities.NewCommandActivity;
 import iao.master.blanchisserie.models.Articles;
 
 public class ArticlesAdapter  extends
@@ -24,9 +25,17 @@ public class ArticlesAdapter  extends
     List<Articles> articles;
     Map<String,Integer> articlesQuantities;
 
+    OnUpdateListener updateListener;
+
+    public void setUpdateListener(OnUpdateListener updateListener){
+        this.updateListener = updateListener;
+    }
+
+
     public ArticlesAdapter(List<Articles> articles) {
         this.articles = articles;
         articlesQuantities = new HashMap<String, Integer>();
+
     }
 
     @NonNull
@@ -62,16 +71,18 @@ public class ArticlesAdapter  extends
             public void onClick(View v) {
                 articlesQuantities.put(article.getName(),articlesQuantities.get(article.getName())+1);
                 holder.articleQuantity.setText(articlesQuantities.get(article.getName()).toString());
-
+                updateListener.onUpdate("add",article.getPrice());
             }
         });
 
         holder.minusCounter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(articlesQuantities.get(article.getName())>0)
+                if(articlesQuantities.get(article.getName())>0){
                 articlesQuantities.put(article.getName(),articlesQuantities.get(article.getName())-1);
                 holder.articleQuantity.setText(articlesQuantities.get(article.getName()).toString());
+                updateListener.onUpdate("sub",article.getPrice());
+                }
             }
         });
 
@@ -92,6 +103,10 @@ public class ArticlesAdapter  extends
 
 
 
+    public  interface OnUpdateListener{
+
+         void onUpdate(String op,Float newPrice);
+    }
 
     //view holder class
     public class ViewHolder extends RecyclerView.ViewHolder {

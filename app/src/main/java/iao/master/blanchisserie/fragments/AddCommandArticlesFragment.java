@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ import java.util.List;
 import iao.master.blanchisserie.R;
 import iao.master.blanchisserie.activities.NewCommandActivity;
 import iao.master.blanchisserie.adapters.ArticlesAdapter;
+import iao.master.blanchisserie.daos.BlanchisserieDao;
+import iao.master.blanchisserie.database.Database;
 import iao.master.blanchisserie.models.Articles;
 
 
@@ -41,17 +44,23 @@ public class AddCommandArticlesFragment extends Fragment {
             newCommandActivity.nextFragment();
         });
 
-        List<Articles> articles = new ArrayList<>();
-        Articles articles1 = new Articles("chemise",15f,"image_chemise");
-        Articles articles2 = new Articles("pantalon",15f,"image_pantalon");
+        //db
+        Database db = Database.getInstance(getContext());
+        BlanchisserieDao blanchisserieDao = db.blanchisserieDao();
 
-        articles.add(articles1);
-        articles.add(articles2);
+        List<Articles> articles = blanchisserieDao.getAllArticles();
+
 
         RecyclerView recyclerAddCommandArticles = (RecyclerView) view.findViewById(R.id.recycler_add_command_articles);
         ArticlesAdapter adapter = new ArticlesAdapter(articles);
         recyclerAddCommandArticles.setAdapter(adapter);
         recyclerAddCommandArticles.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter.setUpdateListener((op, newPrice) -> {
+            ((NewCommandActivity) getActivity()).updatePrice(op,newPrice);
+        });
 
     }
+
+
 }
+

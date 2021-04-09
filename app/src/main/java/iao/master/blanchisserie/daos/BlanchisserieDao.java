@@ -59,7 +59,7 @@ public interface BlanchisserieDao {
 
     //articles functions
     @Query("select * from articles")
-    public Articles[] getAllArticles();
+    public List<Articles> getAllArticles();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertArticle(Articles article);
