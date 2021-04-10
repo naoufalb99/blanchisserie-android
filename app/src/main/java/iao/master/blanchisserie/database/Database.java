@@ -15,7 +15,7 @@ import iao.master.blanchisserie.models.Commands;
 import iao.master.blanchisserie.models.Settings;
 
 
-@androidx.room.Database(entities = {Settings.class, ArticleCommand.class, Articles.class, Clients.class, Commands.class}, version = 4,exportSchema = false)
+@androidx.room.Database(entities = {Settings.class, ArticleCommand.class, Articles.class, Clients.class, Commands.class}, version = 6,exportSchema = false)
 public abstract class Database extends RoomDatabase {
     private static Database db;
 

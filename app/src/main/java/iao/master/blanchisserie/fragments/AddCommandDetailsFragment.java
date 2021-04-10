@@ -67,7 +67,8 @@ public class AddCommandDetailsFragment extends Fragment {
         setClientDetailsView(newCommandActivity.getClient());
 
         newCommandActivity.getButtonContinue().setOnClickListener(v -> {
-            newCommandActivity.nextFragment();
+            newCommandActivity.persistCommand();
+//            newCommandActivity.nextFragment();
         });
 
     }

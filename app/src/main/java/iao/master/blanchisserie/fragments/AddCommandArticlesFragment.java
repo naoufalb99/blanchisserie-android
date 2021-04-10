@@ -40,9 +40,7 @@ public class AddCommandArticlesFragment extends Fragment {
         NewCommandActivity newCommandActivity = ((NewCommandActivity) getActivity());
         newCommandActivity.setTopAppBarTitle("Ajouter vos articles");
 
-        newCommandActivity.getButtonContinue().setOnClickListener(v -> {
-            newCommandActivity.nextFragment();
-        });
+
 
         //db
         Database db = Database.getInstance(getContext());
@@ -52,11 +50,16 @@ public class AddCommandArticlesFragment extends Fragment {
 
 
         RecyclerView recyclerAddCommandArticles = (RecyclerView) view.findViewById(R.id.recycler_add_command_articles);
-        ArticlesAdapter adapter = new ArticlesAdapter(articles);
+        ArticlesAdapter adapter = new ArticlesAdapter(articles, newCommandActivity.getArticlesCount());
         recyclerAddCommandArticles.setAdapter(adapter);
         recyclerAddCommandArticles.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter.setUpdateListener((op, newPrice) -> {
             ((NewCommandActivity) getActivity()).updatePrice(op,newPrice);
+        });
+
+        newCommandActivity.getButtonContinue().setOnClickListener(v -> {
+            newCommandActivity.setArticlesCount(adapter.getArticlesCount());
+            newCommandActivity.nextFragment();
         });
 
     }

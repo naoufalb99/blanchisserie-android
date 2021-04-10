@@ -1,6 +1,7 @@
 package iao.master.blanchisserie.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ public class ArticlesAdapter  extends
         RecyclerView.Adapter<ArticlesAdapter.ViewHolder> {
 
     List<Articles> articles;
-    Map<String,Integer> articlesQuantities;
+    Map<Long, Integer> articlesQuantities;
 
     OnUpdateListener updateListener;
 
@@ -32,10 +33,13 @@ public class ArticlesAdapter  extends
     }
 
 
-    public ArticlesAdapter(List<Articles> articles) {
+    public ArticlesAdapter(List<Articles> articles, Map<Long, Integer> articlesQuantities) {
         this.articles = articles;
-        articlesQuantities = new HashMap<String, Integer>();
-
+        if(articlesQuantities == null) {
+            this.articlesQuantities = new HashMap<Long, Integer>();
+        }else {
+            this.articlesQuantities = articlesQuantities;
+        }
     }
 
     @NonNull
@@ -63,26 +67,23 @@ public class ArticlesAdapter  extends
         holder.articleName.setText(article.getName());
 
         //setting the counter
-        int quantity = Integer.parseInt(holder.articleQuantity.getText().toString());
-        articlesQuantities.put(article.getName(),quantity);
+        if(articlesQuantities.get(article.getArticle_id()) == null) {
+            articlesQuantities.put(article.getArticle_id(), 0);
+        }else {
+            holder.articleQuantity.setText(String.valueOf(articlesQuantities.get(article.getArticle_id())));
+        }
             //buttons settings
-        holder.addCounter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                articlesQuantities.put(article.getName(),articlesQuantities.get(article.getName())+1);
-                holder.articleQuantity.setText(articlesQuantities.get(article.getName()).toString());
-                updateListener.onUpdate("add",article.getPrice());
-            }
+        holder.addCounter.setOnClickListener(v -> {
+            articlesQuantities.put(article.getArticle_id(),articlesQuantities.get(article.getArticle_id())+1);
+            holder.articleQuantity.setText(String.valueOf(articlesQuantities.get(article.getArticle_id())));
+            updateListener.onUpdate("add",article.getPrice());
         });
 
-        holder.minusCounter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(articlesQuantities.get(article.getName())>0){
-                articlesQuantities.put(article.getName(),articlesQuantities.get(article.getName())-1);
-                holder.articleQuantity.setText(articlesQuantities.get(article.getName()).toString());
-                updateListener.onUpdate("sub",article.getPrice());
-                }
+        holder.minusCounter.setOnClickListener(v -> {
+            if(articlesQuantities.get(article.getArticle_id())>0){
+            articlesQuantities.put(article.getArticle_id(),articlesQuantities.get(article.getArticle_id())-1);
+            holder.articleQuantity.setText(String.valueOf(articlesQuantities.get(article.getArticle_id())));
+            updateListener.onUpdate("sub",article.getPrice());
             }
         });
 
@@ -95,16 +96,11 @@ public class ArticlesAdapter  extends
         return articles.size();
     }
 
-    public Map<String,Integer> getArticlesCount(){
+    public Map<Long,Integer> getArticlesCount(){
         return articlesQuantities;
     }
 
-
-
-
-
     public  interface OnUpdateListener{
-
          void onUpdate(String op,Float newPrice);
     }
 
@@ -117,10 +113,6 @@ public class ArticlesAdapter  extends
        public Button minusCounter;
 
        private Context context;
-
-
-
-
 
 
         public ViewHolder(View itemView) {
@@ -137,7 +129,6 @@ public class ArticlesAdapter  extends
         }
 
         public Context getContext(){
-
             return context;
         }
     }

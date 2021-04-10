@@ -49,6 +49,7 @@ public class AddCommandOwnerFragment extends Fragment {
         emailInput = view.findViewById(R.id.clientEmail);
         phoneInput = view.findViewById(R.id.clientPhone);
 
+        subscribed = radioGroup.getCheckedRadioButtonId() == R.id.abonne;
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.abonne) {
                 subscribed = true;

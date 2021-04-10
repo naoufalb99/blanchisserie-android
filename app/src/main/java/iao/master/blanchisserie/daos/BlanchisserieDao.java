@@ -10,6 +10,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import iao.master.blanchisserie.models.ArticleCommand;
 import iao.master.blanchisserie.models.Articles;
 import iao.master.blanchisserie.models.ClientWithCommands;
 import iao.master.blanchisserie.models.Clients;
@@ -38,7 +39,7 @@ public interface BlanchisserieDao {
     public Clients[] getAllClients();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertClient(Clients client);
+    public Long insertClient(Clients client);
 
     @Update
     public void updateClient(Clients client);
@@ -49,7 +50,7 @@ public interface BlanchisserieDao {
 
     //commands functions
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertCommand(Commands command);
+    public Long insertCommand(Commands command);
 
     @Update
     public void updateCommand(Commands command);
@@ -70,6 +71,8 @@ public interface BlanchisserieDao {
     @Delete
     public void deleteArticle(Articles article);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public void insertArticleCommands(List<ArticleCommand> articleCommands);
 
     //transactions
     @Transaction
