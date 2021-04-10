@@ -64,7 +64,8 @@ public class ArticlesAdapter  extends
         int id = holder.getContext().getResources().getIdentifier(articleImage, null, holder.getContext().getPackageName());
         holder.articleIcon.setImageResource(id);
             //setting the name
-        holder.articleName.setText(article.getName());
+        String articleName = article.getName().substring(0, 1).toUpperCase() + article.getName().substring(1).toLowerCase();
+        holder.articleName.setText(articleName);
 
         //setting the counter
         if(articlesQuantities.get(article.getArticle_id()) == null) {

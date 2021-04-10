@@ -20,7 +20,7 @@ import iao.master.blanchisserie.models.Clients;
 public class ArticlesDetailsAdapter extends RecyclerView.Adapter<ArticlesDetailsAdapter.ViewHolder> {
 
     private List<Articles> articlesList;
-    private Map<Integer, Integer> articlesQuantity;
+    private Map<Long, Integer> articlesQuantity;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -41,7 +41,7 @@ public class ArticlesDetailsAdapter extends RecyclerView.Adapter<ArticlesDetails
 
     }
 
-    public ArticlesDetailsAdapter(List<Articles> articlesList, Map<Integer, Integer> articlesQuantity) {
+    public ArticlesDetailsAdapter(List<Articles> articlesList, Map<Long, Integer> articlesQuantity) {
         this.articlesList = articlesList;
         this.articlesQuantity = articlesQuantity;
     }
@@ -55,7 +55,8 @@ public class ArticlesDetailsAdapter extends RecyclerView.Adapter<ArticlesDetails
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.setData(articlesList.get(position), articlesQuantity.get(position));
+        Articles article = articlesList.get(position);
+        holder.setData(article, articlesQuantity.get(article.getArticle_id()));
     }
 
     @Override

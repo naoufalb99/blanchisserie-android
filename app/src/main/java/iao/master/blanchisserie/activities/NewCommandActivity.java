@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Date;
 import java.util.Enumeration;
@@ -47,7 +48,7 @@ public class NewCommandActivity extends AppCompatActivity {
 
     private Vector<Class<? extends Fragment>> fragmentsClasses;
     private Integer currentFragmentIndex = -1;
-    private Float currentPrice=0f;
+    private Float currentPrice = 0f;
 
     private Clients client;
 
@@ -57,6 +58,7 @@ public class NewCommandActivity extends AppCompatActivity {
 
     Button buttonContinue;
     Drawable buttonContinueIcon;
+    private String commandService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +87,7 @@ public class NewCommandActivity extends AppCompatActivity {
 
     private void configureTopAppBar() {
         topAppBar.setNavigationOnClickListener(v -> {
-            if(!prevFragment()) {
+            if (!prevFragment()) {
                 finish();
             }
         });
@@ -96,7 +98,7 @@ public class NewCommandActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.frame_new_command_container, fragment);
 
-        if(addToBackStack) {
+        if (addToBackStack) {
             transaction.addToBackStack(null);
         }
 
@@ -115,16 +117,16 @@ public class NewCommandActivity extends AppCompatActivity {
         return client;
     }
 
-    public void nextFragment(){
+    public void nextFragment() {
         Boolean isFirst = currentFragmentIndex == -1;
-        if(currentFragmentIndex >= fragmentsClasses.size() - 1) return;
+        if (currentFragmentIndex >= fragmentsClasses.size() - 1) return;
         try {
             Fragment fragment = fragmentsClasses.get(++currentFragmentIndex).newInstance();
             selectMainFragment(fragment, false);
-        }catch (Exception e) {
+        } catch (Exception e) {
             Log.e("NewCommandActivity", Objects.requireNonNull(e.getMessage()));
         }
-        if(currentFragmentIndex == fragmentsClasses.size() - 1) {
+        if (currentFragmentIndex == fragmentsClasses.size() - 1) {
             setupForFinalFragment();
         } else {
             resetSetupForFinalFragment();
@@ -132,7 +134,7 @@ public class NewCommandActivity extends AppCompatActivity {
     }
 
     private void resetSetupForFinalFragment() {
-        if(buttonContinueIcon != null) {
+        if (buttonContinueIcon != null) {
             ((MaterialButton) buttonContinue).setIcon(buttonContinueIcon);
             buttonContinueIcon = null;
             buttonContinue.setText("Continuer");
@@ -160,14 +162,14 @@ public class NewCommandActivity extends AppCompatActivity {
     }
 
     public Boolean prevFragment() {
-        if(currentFragmentIndex <= 0) return false;
+        if (currentFragmentIndex <= 0) return false;
         try {
             Fragment fragment = fragmentsClasses.get(--currentFragmentIndex).newInstance();
             selectMainFragment(fragment, false);
-        }catch (Exception e) {
+        } catch (Exception e) {
             Log.e("NewCommandActivity", Objects.requireNonNull(e.getMessage()));
         }
-        if(currentFragmentIndex == fragmentsClasses.size() - 1) {
+        if (currentFragmentIndex == fragmentsClasses.size() - 1) {
             setupForFinalFragment();
         } else {
             resetSetupForFinalFragment();
@@ -190,43 +192,53 @@ public class NewCommandActivity extends AppCompatActivity {
     }
 
     //update price
-     public void updatePrice(String op,float newPrice){
+    public void updatePrice(String op, float newPrice) {
 
-        if(op.equals("add")){
-            currentPrice+=newPrice;
-            textNewCommandPrice.setText(currentPrice.toString()+" Dhs");
-        }else if(op.equals("sub")){
-            if(currentPrice>0){
-            currentPrice-=newPrice;
-            textNewCommandPrice.setText(currentPrice.toString()+" Dhs");
+        if (op.equals("add")) {
+            currentPrice += newPrice;
+            textNewCommandPrice.setText(currentPrice.toString() + " Dhs");
+        } else if (op.equals("sub")) {
+            if (currentPrice > 0) {
+                currentPrice -= newPrice;
+                textNewCommandPrice.setText(currentPrice.toString() + " Dhs");
             }
         }
 
     }
 
     public void persistCommand() {
+        topAppBar.setNavigationIcon(null);
+        findViewById(R.id.bottom_bar_new_command).setVisibility(View.GONE);
+
         db.runInTransaction(new Runnable() {
             @Override
             public void run() {
                 final Long clientId = db.blanchisserieDao().insertClient(client);
-                final Long commandId = db.blanchisserieDao().insertCommand(new Commands(new Date(), Commands.STATUS_IN_PROGRESS, currentPrice, Commands.SERVICE_WASH_AND_IRON, clientId));
+                final Long commandId = db.blanchisserieDao().insertCommand(new Commands(new Date(), Commands.STATUS_IN_PROGRESS, currentPrice, getCommandService(), clientId));
 
                 final Set<Map.Entry<Long, Integer>> articlesCountEntries = articlesCount.entrySet();
                 final List<ArticleCommand> articleCommands = new LinkedList<>();
 
-                for (Map.Entry<Long, Integer> articlesCountEntry: articlesCountEntries) {
+                for (Map.Entry<Long, Integer> articlesCountEntry : articlesCountEntries) {
                     Long articleId = articlesCountEntry.getKey();
                     Integer quantity = articlesCountEntry.getValue();
-                    if(quantity > 0) {
+                    if (quantity > 0) {
                         articleCommands.add(new ArticleCommand(commandId, articleId, quantity));
                     }
                 }
 
                 db.blanchisserieDao().insertArticleCommands(articleCommands);
 
-                finish();
+
             }
         });
+
+
+        Snackbar.make(findViewById(R.id.context_view), R.string.text_label_command_success, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.action_text_command_success, v -> {
+                    finish();
+                })
+                .show();
     }
 
     public void setArticlesCount(Map<Long, Integer> articlesCount) {
@@ -237,4 +249,15 @@ public class NewCommandActivity extends AppCompatActivity {
         return articlesCount;
     }
 
+    public void setCommandService(String commandService) {
+        this.commandService = commandService;
+    }
+
+    public String getCommandService() {
+        return this.commandService;
+    }
+
+    public Float getCurrentPrice() {
+        return this.currentPrice;
+    }
 }

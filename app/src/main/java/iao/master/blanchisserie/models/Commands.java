@@ -10,13 +10,13 @@ import iao.master.blanchisserie.utils.TimestampConverter;
 
 @Entity(tableName = "commands")
 public class Commands {
-    public static String STATUS_COMPLETED = "STATUS_COMPLETED";
-    public static String STATUS_IN_PROGRESS = "STATUS_IN_PROGRESS";
+    public final static String STATUS_COMPLETED = "STATUS_COMPLETED";
+    public final static String STATUS_IN_PROGRESS = "STATUS_IN_PROGRESS";
 
-    public static String SERVICE_WASH_AND_IRON = "SERVICE_WASH_AND_IRON";
-    public static String SERVICE_IRONING = "SERVICE_IRONING";
-    public static String SERVICE_DRY_CLEANING = "SERVICE_DRY_CLEANING";
-    public static String SERVICE_DARNING = "SERVICE_DARNING";
+    public final static String SERVICE_WASH_AND_IRON = "SERVICE_WASH_AND_IRON";
+    public final static String SERVICE_IRONING = "SERVICE_IRONING";
+    public final static String SERVICE_DRY_CLEANING = "SERVICE_DRY_CLEANING";
+    public final static String SERVICE_DARNING = "SERVICE_DARNING";
 
     @PrimaryKey(autoGenerate = true)
     private Long command_id;

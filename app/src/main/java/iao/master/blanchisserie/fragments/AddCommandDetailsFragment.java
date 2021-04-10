@@ -23,13 +23,14 @@ import iao.master.blanchisserie.R;
 import iao.master.blanchisserie.activities.NewCommandActivity;
 import iao.master.blanchisserie.adapters.ArticlesAdapter;
 import iao.master.blanchisserie.adapters.ArticlesDetailsAdapter;
+import iao.master.blanchisserie.database.Database;
 import iao.master.blanchisserie.models.Articles;
 import iao.master.blanchisserie.models.Clients;
 
 
 public class AddCommandDetailsFragment extends Fragment {
 
-    TextView textClientName, textClientEmail, textClientPhone ,textArticlesDetailsTotalPrice;
+    TextView textClientName, textClientEmail, textClientPhone, textArticlesDetailsTotalPrice;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,28 +42,32 @@ public class AddCommandDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        NewCommandActivity newCommandActivity = ((NewCommandActivity) getActivity());
+        newCommandActivity.setTopAppBarTitle("Détails de la commande");
+
         textClientName = (TextView) view.findViewById(R.id.text_client_name);
         textClientEmail = (TextView) view.findViewById(R.id.text_client_email);
         textClientPhone = (TextView) view.findViewById(R.id.text_client_phone);
         textArticlesDetailsTotalPrice = (TextView) view.findViewById(R.id.text_articles_details_total_price);
 
-        List<Articles> articlesList = new LinkedList<>();
-        articlesList.add(new Articles("T-shirt", 25F, ""));
-        articlesList.add(new Articles("Chemise", 30F, ""));
+        new Thread(() -> {
+            List<Articles> articlesList = Database.getInstance(getContext()).blanchisserieDao().getAllArticles();
 
-        Map<Integer, Integer> articlesQuantity = new HashMap<>();
-        articlesQuantity.put(0, 2);
-        articlesQuantity.put(1, 3);
+            Map<Long, Integer> articlesQuantity = newCommandActivity.getArticlesCount();
 
-        calculateTotalPrice(articlesList, articlesQuantity, textArticlesDetailsTotalPrice);
+            articlesList.removeIf(article -> articlesQuantity.get(article.getArticle_id()) == null || articlesQuantity.get(article.getArticle_id()) == 0);
 
-        RecyclerView recyclerArticlesDetails = (RecyclerView) view.findViewById(R.id.recycler_articles_details);
-        ArticlesDetailsAdapter adapter = new ArticlesDetailsAdapter(articlesList, articlesQuantity);
-        recyclerArticlesDetails.setAdapter(adapter);
-        recyclerArticlesDetails.setLayoutManager(new LinearLayoutManager(getActivity()));
+            calculateTotalPrice(articlesList, articlesQuantity, textArticlesDetailsTotalPrice);
 
-        NewCommandActivity newCommandActivity = ((NewCommandActivity) getActivity());
-        newCommandActivity.setTopAppBarTitle("Détails de la commande");
+            view.post(() -> {
+
+                RecyclerView recyclerArticlesDetails = (RecyclerView) view.findViewById(R.id.recycler_articles_details);
+                ArticlesDetailsAdapter adapter = new ArticlesDetailsAdapter(articlesList, articlesQuantity);
+                recyclerArticlesDetails.setAdapter(adapter);
+                recyclerArticlesDetails.setLayoutManager(new LinearLayoutManager(getActivity()));
+            });
+
+        }).start();
 
         setClientDetailsView(newCommandActivity.getClient());
 
@@ -73,17 +78,16 @@ public class AddCommandDetailsFragment extends Fragment {
 
     }
 
-    private void calculateTotalPrice(List<Articles> articlesList, Map<Integer, Integer> articlesQuantity, TextView v) {
-        new Thread(() -> {
-            Float totalPrice = 0F;
-            for(int i = 0; i < articlesList.size(); i++) {
-                totalPrice += articlesList.get(i).getPrice() * articlesQuantity.get(i);
-            }
-            Float finalTotalPrice = totalPrice;
-            v.post(() -> {
-                v.setText(String.valueOf(finalTotalPrice));
-            });
-        }).start();
+    private void calculateTotalPrice(List<Articles> articlesList, Map<Long, Integer> articlesQuantity, TextView v) {
+        Float totalPrice = 0F;
+        for (int i = 0; i < articlesList.size(); i++) {
+            Articles article = articlesList.get(i);
+            totalPrice += article.getPrice() * articlesQuantity.get(article.getArticle_id());
+        }
+        Float finalTotalPrice = totalPrice;
+        v.post(() -> {
+            v.setText(String.valueOf(finalTotalPrice));
+        });
     }
 
 

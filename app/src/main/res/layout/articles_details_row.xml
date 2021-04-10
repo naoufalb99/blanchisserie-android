@@ -41,6 +41,13 @@
             android:text="Nam vel"
             android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorPrimary" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/u"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorPrimary" />
+
 
     </LinearLayout>
 
