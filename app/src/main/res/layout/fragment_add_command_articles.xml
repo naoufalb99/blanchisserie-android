@@ -16,44 +16,45 @@
         android:textAppearance="?attr/textAppearanceHeadline6" />
 
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group_services"
-            android:layout_width="match_parent"
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_services"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_wash_and_iron"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            app:singleSelection="true">
+            android:checked="true"
+            android:text="Wash &amp; Iron" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_wash_and_iron"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Wash &amp; Iron" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_ironing"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ironing" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_ironing"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ironing" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_dry_cleaning"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dry Cleaning" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_dry_cleaning"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dry Cleaning" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_darning"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Darning" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_darning"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Darning" />
-
-        </com.google.android.material.chip.ChipGroup>
+    </com.google.android.material.chip.ChipGroup>
 
 
     <View

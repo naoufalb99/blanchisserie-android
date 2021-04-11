@@ -87,8 +87,11 @@ public interface BlanchisserieDao {
     public List<ClientWithCommands> getClientWithCommands();
 
     @Transaction
+    @Query("SELECT * FROM commands WHERE service=:service AND status=:status ORDER BY  created_at DESC")
+    public List<CommandWithArticles> getCommandWithArticlesByServiceAndStatus(String service, String status);
+
+    @Transaction
     @Query("SELECT * FROM commands WHERE service=:service ORDER BY  created_at DESC")
     public List<CommandWithArticles> getCommandWithArticlesByService(String service);
-
 
 }
