@@ -23,6 +23,7 @@ import iao.master.blanchisserie.database.Database;
 import iao.master.blanchisserie.fragments.ClientsFragment;
 import iao.master.blanchisserie.fragments.CommandsFragment;
 import iao.master.blanchisserie.fragments.HomeFragment;
+import iao.master.blanchisserie.fragments.SettingsFragment;
 
 // TODO: rename this activity
 public class HomeActivity extends AppCompatActivity {
@@ -73,8 +74,7 @@ public class HomeActivity extends AppCompatActivity {
                 selectedFragment = new HomeFragment();
                 break;
             case R.id.menu_item_settings:
-                // TODO: replace it with SettingsFragment
-                selectedFragment = new CommandsFragment();
+                selectedFragment = new SettingsFragment();
                 break;
             case R.id.menu_item_clients:
                 selectedFragment = new ClientsFragment();

@@ -58,6 +58,9 @@ public interface BlanchisserieDao {
     @Delete
     public void deleteCommand(Commands command);
 
+    @Query("SELECT * FROM commands WHERE service =:service")
+    public List<Commands> getCommandByService(String service);
+
     //articles functions
     @Query("select * from articles")
     public List<Articles> getAllArticles();
@@ -74,14 +77,18 @@ public interface BlanchisserieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertArticleCommands(List<ArticleCommand> articleCommands);
 
+    //article_command
+    @Query("SELECT * FROM article_command WHERE command_id=:commandId")
+    public List<ArticleCommand> getArticleCommandWithCommandId(Long commandId);
+
     //transactions
     @Transaction
     @Query("SELECT * FROM clients")
     public List<ClientWithCommands> getClientWithCommands();
 
     @Transaction
-    @Query("SELECT * FROM commands ")
-    public List<CommandWithArticles> getCommandWithArticles();
+    @Query("SELECT * FROM commands WHERE service=:service ORDER BY  created_at DESC")
+    public List<CommandWithArticles> getCommandWithArticlesByService(String service);
 
 
 }

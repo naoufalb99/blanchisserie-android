@@ -1,6 +1,7 @@
 package iao.master.blanchisserie.models;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -28,6 +29,17 @@ public class Commands {
     private Float total_price;
     private String service;
     private Long client_id;
+
+    @Ignore
+    public Commands(Long command_id, Date created_at, String status, Float total_price, String service, Long client_id) {
+        this.command_id = command_id;
+        this.created_at = created_at;
+        this.status = status;
+        this.total_price = total_price;
+        this.service = service;
+        this.client_id = client_id;
+    }
+
 
     public Commands(Date created_at, String status, Float total_price, String service, Long client_id) {
         this.created_at = created_at;
