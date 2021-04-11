@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import iao.master.blanchisserie.R;
+import iao.master.blanchisserie.activities.HomeActivity;
 import iao.master.blanchisserie.activities.WelcomeActivity;
 import iao.master.blanchisserie.daos.BlanchisserieDao;
 import iao.master.blanchisserie.database.Database;
@@ -40,7 +41,6 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         Database db = Database.getInstance(view.getContext());
         BlanchisserieDao blanchisserieDao = db.blanchisserieDao();
 
@@ -51,6 +51,8 @@ public class HomeFragment extends Fragment {
             blanchisserieDao.deleteSettings();
             startActivity(new Intent(view.getContext(), WelcomeActivity.class));
         });
+
+
     }
 
     public void goToCommand(View view){
@@ -65,7 +67,7 @@ public class HomeFragment extends Fragment {
             CommandsFragment fragment = new CommandsFragment();
             fragment.setArguments(data);
             getFragmentManager().beginTransaction().replace(R.id.frame_container,fragment).commit();
-
+            ((HomeActivity) getActivity()).setTopAppBarTitle("Commandes");
         });
 
         iron.setOnClickListener(v -> {
@@ -73,7 +75,7 @@ public class HomeFragment extends Fragment {
             CommandsFragment fragment = new CommandsFragment();
             fragment.setArguments(data);
             getFragmentManager().beginTransaction().replace(R.id.frame_container,fragment).commit();
-
+            ((HomeActivity) getActivity()).setTopAppBarTitle("Commandes");
         });
 
         dry_cleaning.setOnClickListener(v -> {
@@ -81,7 +83,7 @@ public class HomeFragment extends Fragment {
             CommandsFragment fragment = new CommandsFragment();
             fragment.setArguments(data);
             getFragmentManager().beginTransaction().replace(R.id.frame_container,fragment).commit();
-
+            ((HomeActivity) getActivity()).setTopAppBarTitle("Commandes");
         });
 
         darning.setOnClickListener(v -> {
@@ -89,7 +91,7 @@ public class HomeFragment extends Fragment {
             CommandsFragment fragment = new CommandsFragment();
             fragment.setArguments(data);
             getFragmentManager().beginTransaction().replace(R.id.frame_container,fragment).commit();
-
+            ((HomeActivity) getActivity()).setTopAppBarTitle("Commandes");
         });
 
     }

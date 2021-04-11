@@ -45,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
         configureFloatingButtonNewCommand();
 
         selectMainFragment(new HomeFragment());
+        setTopAppBarTitle(bottomNavigation.getMenu().findItem(R.id.menu_item_home).getTitle().toString());
     }
 
     private void configureFloatingButtonNewCommand() {
@@ -83,10 +84,14 @@ public class HomeActivity extends AppCompatActivity {
                 throw new IllegalStateException("Unexpected value: " + itemId);
         }
 
-        topAppBar.setTitle(bottomNavigation.getMenu().findItem(itemId).getTitle());
+        setTopAppBarTitle(bottomNavigation.getMenu().findItem(itemId).getTitle().toString());
         selectMainFragment(selectedFragment);
 
         return true;
+    }
+
+    public void setTopAppBarTitle(String value) {
+        topAppBar.setTitle(value);
     }
 
 }
