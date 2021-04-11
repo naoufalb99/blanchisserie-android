@@ -1,0 +1,45 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <PreferenceCategory
+        android:title="Paramètres Blanchisserie"
+        app:icon="@drawable/ic_baseline_supervised_user_circle_24"
+        >
+        <EditTextPreference
+            app:key="nom_blanchisserie"
+            app:title="Changer le nom de la blanchisserie"
+            android:summary="old name "
+            />
+
+        <EditTextPreference
+            app:key="adresse_blanchisserie"
+            app:title="Changer l'adresse de la Blanchisserie"
+            android:summary="old adresse "
+            />
+        <EditTextPreference
+            app:key="email_blanchisserie"
+            app:title="Changer l'email de la Blanchisserie"
+            android:summary="old email "
+            />
+        <EditTextPreference
+            app:key="num_blanchisserie"
+            app:title="Changer le numero de teephone de la Blanchisserie"
+            android:summary="old num "
+            />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Factory reset"
+        app:icon="@drawable/ic_baseline_autorenew_24"
+        >
+        <Preference
+            android:title="Reset Factory Settings"
+            android:key="factory_reset"
+            android:summary="Efface tout les donnees de l'application"
+            />
+    </PreferenceCategory>
+
+
+
+</PreferenceScreen>

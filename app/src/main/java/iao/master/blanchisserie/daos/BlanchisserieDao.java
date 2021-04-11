@@ -34,7 +34,7 @@ public interface BlanchisserieDao {
     @Query("SELECT * FROM settings")
     public Settings[] getAllSettings();
 
-
+    //clients funstions
     @Query("select * from clients")
     public Clients[] getAllClients();
 
@@ -46,6 +46,9 @@ public interface BlanchisserieDao {
 
     @Delete
     public void deleteClient(Clients client);
+
+    @Query("DELETE FROM clients")
+    public void deleteAllClients();
 
 
     //commands functions
@@ -60,6 +63,8 @@ public interface BlanchisserieDao {
 
     @Query("SELECT * FROM commands WHERE service =:service")
     public List<Commands> getCommandByService(String service);
+    @Query("DELETE FROM commands")
+    public void deleteAllCommands();
 
     //articles functions
     @Query("select * from articles")
@@ -80,6 +85,8 @@ public interface BlanchisserieDao {
     //article_command
     @Query("SELECT * FROM article_command WHERE command_id=:commandId")
     public List<ArticleCommand> getArticleCommandWithCommandId(Long commandId);
+    @Query("DELETE FROM article_command")
+    public void deleteAllArticleCommands();
 
     //transactions
     @Transaction

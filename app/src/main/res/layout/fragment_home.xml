@@ -177,14 +177,6 @@
 
     </GridLayout>
 
-    <Button
-        android:id="@+id/button_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="47dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="10dp"
-        android:text="Delete settings" />
+
 
 </LinearLayout>

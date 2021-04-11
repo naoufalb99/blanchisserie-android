@@ -23,7 +23,7 @@ import iao.master.blanchisserie.models.Commands;
 
 public class HomeFragment extends Fragment {
 
-    Button buttonDelete;
+
 
     CardView wash_iron;
     CardView iron;
@@ -45,12 +45,6 @@ public class HomeFragment extends Fragment {
         BlanchisserieDao blanchisserieDao = db.blanchisserieDao();
 
         goToCommand(view);
-
-        buttonDelete = (Button) view.findViewById(R.id.button_delete);
-        buttonDelete.setOnClickListener(v -> {
-            blanchisserieDao.deleteSettings();
-            startActivity(new Intent(view.getContext(), WelcomeActivity.class));
-        });
 
 
     }

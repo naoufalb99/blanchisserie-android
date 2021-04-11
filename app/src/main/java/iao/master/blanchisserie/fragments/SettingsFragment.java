@@ -1,66 +1,155 @@
 package iao.master.blanchisserie.fragments;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 
 import iao.master.blanchisserie.R;
+import iao.master.blanchisserie.activities.WelcomeActivity;
+import iao.master.blanchisserie.daos.BlanchisserieDao;
+import iao.master.blanchisserie.database.Database;
+import iao.master.blanchisserie.models.Settings;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SettingsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SettingsFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public SettingsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+public class SettingsFragment extends PreferenceFragmentCompat {
+    Context context;
+    Preference factoryReset ;
+    EditTextPreference nomB,adresseB,emailB,numB;
+    Settings[] settings;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.root_preferences, rootKey);
+
+        factoryReset = findPreference("factory_reset");
+
+        nomB = (EditTextPreference) findPreference("nom_blanchisserie");
+        adresseB = (EditTextPreference) findPreference("adresse_blanchisserie");
+        emailB = (EditTextPreference) findPreference("email_blanchisserie");
+        numB = (EditTextPreference) findPreference("num_blanchisserie");
+
+
+
+
     }
 
+
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        context = view.getContext();
+        Database db = Database.getInstance(view.getContext());
+        BlanchisserieDao blanchisserieDao = db.blanchisserieDao();
+
+
+        showDefaultBlanchisserieSettings(blanchisserieDao);
+        updateBlanchisserieInfo(blanchisserieDao);
+
+
+
+        factoryReset.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                showFactoryResetAlert(blanchisserieDao);
+                return true;
+            }
+        });
     }
+
+    public void updateBlanchisserieInfo(BlanchisserieDao blanchisserieDao){
+        nomB.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                settings[0].setNomBlanchisserie((String) newValue);
+                blanchisserieDao.updateSetting(settings[0]);
+                preference.setSummary((String)newValue);
+                Toast.makeText(context,"update succesfull",
+                        Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        adresseB.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                settings[0].setAdresse((String) newValue);
+                blanchisserieDao.updateSetting(settings[0]);
+                preference.setSummary((String)newValue);
+                Toast.makeText(context,"update succesfull",
+                        Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        emailB.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                settings[0].setEmail((String) newValue);
+                blanchisserieDao.updateSetting(settings[0]);
+                preference.setSummary((String)newValue);
+                Toast.makeText(context,"update succesfull",
+                        Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        numB.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                settings[0].setNumeroTelephone((String) newValue);
+                blanchisserieDao.updateSetting(settings[0]);
+                preference.setSummary((String)newValue);
+                Toast.makeText(context,"update succesfull",
+                        Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+    }
+
+    public void showDefaultBlanchisserieSettings(BlanchisserieDao blanchisserieDao){
+        settings = blanchisserieDao.getAllSettings();
+        nomB.setSummary(settings[0].getNomBlanchisserie());
+        adresseB.setSummary(settings[0].getAdresse());
+        emailB.setSummary(settings[0].getEmail());
+        numB.setSummary(settings[0].getNumeroTelephone());
+    }
+
+    public void showFactoryResetAlert(BlanchisserieDao blanchisserieDao){
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setTitle("Factory Reset");
+        alert.setMessage("are you sure you want to reset the app");
+        alert.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                blanchisserieDao.deleteAllClients();
+                blanchisserieDao.deleteAllCommands();
+                blanchisserieDao.deleteAllArticleCommands();
+                blanchisserieDao.deleteSettings();
+                startActivity(new Intent(context, WelcomeActivity.class));
+
+            }
+        }).setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+                Toast.makeText(context,"Factory reset canceled",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        alert.create().show();
+    }
+
+
+
+
+
+
 }

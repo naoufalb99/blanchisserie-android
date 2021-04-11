@@ -2,26 +2,17 @@ package iao.master.blanchisserie.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Objects;
-
 import iao.master.blanchisserie.R;
-import iao.master.blanchisserie.daos.BlanchisserieDao;
-import iao.master.blanchisserie.database.Database;
 import iao.master.blanchisserie.fragments.ClientsFragment;
-import iao.master.blanchisserie.fragments.CommandsFragment;
 import iao.master.blanchisserie.fragments.HomeFragment;
 import iao.master.blanchisserie.fragments.SettingsFragment;
 
