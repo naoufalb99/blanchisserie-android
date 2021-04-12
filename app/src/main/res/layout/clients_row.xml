@@ -17,7 +17,7 @@
             android:id="@+id/chip_subscribed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="right|bottom"
             android:layout_marginEnd="8dp"
             android:clickable="false"
             android:visibility="invisible"

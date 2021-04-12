@@ -12,14 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import iao.master.blanchisserie.R;
@@ -72,17 +70,30 @@ public class AddCommandArticlesFragment extends Fragment {
         newCommandActivity.getButtonContinue().setOnClickListener(v -> {
             newCommandActivity.setArticlesCount(adapter.getArticlesCount());
             newCommandActivity.setCommandService(this.commandService);
-            if(newCommandActivity.getCurrentPrice() == 0F) {
+            if (newCommandActivity.getCurrentPrice() == 0F) {
                 Toast.makeText(getContext(), "Veuillez choisir au moins un article", Toast.LENGTH_SHORT).show();
-            }else {
-                newCommandActivity.nextFragment();
+            } else {
+
+                String[] items = {"Selectionner un client?", "Créer un nouveau client?"};
+                new MaterialAlertDialogBuilder(getContext())
+                        .setTitle("Voulez-vous")
+                        .setItems(items, (dialog, which) -> {
+                            if (which == 0) {
+                                newCommandActivity.setOwnerFragment(AddCommandSelectOwnerFragment.class);
+                            } else {
+                                newCommandActivity.setOwnerFragment(AddCommandOwnerFragment.class);
+                            }
+                            dialog.dismiss();
+                            newCommandActivity.nextFragment();
+                        })
+                        .show();
             }
         });
 
     }
 
     private void configureChipGroupServices(String defaultCommandService, View v) {
-        if(defaultCommandService != null) {
+        if (defaultCommandService != null) {
             ((Chip) v.findViewById(getChipIdByCommandService(defaultCommandService))).setChecked(true);
         }
         updateCommandService(chipGroupServices.getCheckedChipId());

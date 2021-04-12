@@ -37,8 +37,10 @@ import iao.master.blanchisserie.models.Commands;
 
 public class CommandsFragment extends Fragment {
 
-    String commandService;
-    Database db;
+    private String commandService;
+    private Long clientId;
+
+    private Database db;
 
     List<CommandWithArticles> commandsWithArticles;
 
@@ -51,8 +53,11 @@ public class CommandsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_commands, container, false);
+
         Bundle data = this.getArguments();
-         commandService = data.getString("operation");
+        this.commandService = data.getString("operation");
+        this.clientId = data.getLong("clientId");
+
         return v;
     }
 
@@ -85,15 +90,15 @@ public class CommandsFragment extends Fragment {
             });
 
             adapter.setOnCompletedListener(position -> {
-                new Thread(()-> {
+                new Thread(() -> {
                     Commands command = commandsWithArticles.get(position).command;
+                    command.setStatus(Commands.STATUS_COMPLETED);
+                    this.db.blanchisserieDao().updateCommand(command);
                     commandsWithArticles = queryCommandsWithArticles(chipGroupServices.getCheckedChipId());
                     adapter.setCommandsWithArticles(commandsWithArticles);
                     view.post(() -> {
                         adapter.notifyDataSetChanged();
                     });
-                    command.setStatus(Commands.STATUS_COMPLETED);
-                    this.db.blanchisserieDao().updateCommand(command);
                 }).start();
             });
 
@@ -101,12 +106,21 @@ public class CommandsFragment extends Fragment {
 
     }
 
-    private List<CommandWithArticles> queryCommandsWithArticles(int checkedChipId){
+    private List<CommandWithArticles> queryCommandsWithArticles(int checkedChipId) {
         String status = mapChipToStatus.get(checkedChipId);
-        if(status == null || status.isEmpty()) {
-            return this.db.blanchisserieDao().getCommandWithArticlesByService(commandService);
-        }else {
-            return this.db.blanchisserieDao().getCommandWithArticlesByServiceAndStatus(commandService, status);
+        if(commandService != null) {
+            if (status == null || status.isEmpty()) {
+                return this.db.blanchisserieDao().getCommandWithArticlesByService(commandService);
+            } else {
+                return this.db.blanchisserieDao().getCommandWithArticlesByServiceAndStatus(commandService, status);
+            }
+        } else if(clientId != null) {
+            if (status == null || status.isEmpty()) {
+                return this.db.blanchisserieDao().getCommandWithArticlesByClientId(clientId);
+            } else {
+                return this.db.blanchisserieDao().getCommandWithArticlesByClientIdAndStatus(clientId, status);
+            }
         }
+        return null;
     }
 }

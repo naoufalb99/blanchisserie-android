@@ -7,11 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.view.ViewDebug;
-
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,8 +19,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +76,7 @@ public class NewCommandActivity extends AppCompatActivity {
     private void loadFragmentsClasses() {
         fragmentsClasses = new Vector<>();
         fragmentsClasses.add(AddCommandArticlesFragment.class);
-        fragmentsClasses.add(AddCommandOwnerFragment.class);
+        fragmentsClasses.add(AddCommandOwnerFragment.class); // AddCommandOwnerFragment.class | AddCommandSelectOwnerFragment.class
         fragmentsClasses.add(AddCommandDetailsFragment.class);
     }
 
@@ -213,7 +208,12 @@ public class NewCommandActivity extends AppCompatActivity {
         db.runInTransaction(new Runnable() {
             @Override
             public void run() {
-                final Long clientId = db.blanchisserieDao().insertClient(client);
+                Long clientId;
+                if (fragmentsClasses.get(1).equals(AddCommandOwnerFragment.class)) {
+                    clientId = db.blanchisserieDao().insertClient(client);
+                } else {
+                    clientId = client.getId();
+                }
                 final Long commandId = db.blanchisserieDao().insertCommand(new Commands(new Date(), Commands.STATUS_IN_PROGRESS, currentPrice, getCommandService(), clientId));
 
                 final Set<Map.Entry<Long, Integer>> articlesCountEntries = articlesCount.entrySet();
@@ -259,5 +259,9 @@ public class NewCommandActivity extends AppCompatActivity {
 
     public Float getCurrentPrice() {
         return this.currentPrice;
+    }
+
+    public void setOwnerFragment(Class<? extends Fragment> fragmentClass) {
+        fragmentsClasses.set(1, fragmentClass);
     }
 }

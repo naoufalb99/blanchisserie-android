@@ -34,9 +34,12 @@ public interface BlanchisserieDao {
     @Query("SELECT * FROM settings")
     public Settings[] getAllSettings();
 
-    //clients funstions
+    //clients functions
     @Query("select * from clients")
     public Clients[] getAllClients();
+
+    @Query("select * from clients where id=:clientId")
+    public Clients getClientById(Long clientId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public Long insertClient(Clients client);
@@ -94,11 +97,19 @@ public interface BlanchisserieDao {
     public List<ClientWithCommands> getClientWithCommands();
 
     @Transaction
-    @Query("SELECT * FROM commands WHERE service=:service AND status=:status ORDER BY  created_at DESC")
-    public List<CommandWithArticles> getCommandWithArticlesByServiceAndStatus(String service, String status);
+    @Query("SELECT * FROM commands WHERE client_id=:clientId ORDER BY created_at DESC")
+    public List<CommandWithArticles> getCommandWithArticlesByClientId(Long clientId);
+
+    @Transaction
+    @Query("SELECT * FROM commands WHERE client_id=:clientId AND status=:status ORDER BY created_at DESC")
+    public List<CommandWithArticles> getCommandWithArticlesByClientIdAndStatus(Long clientId, String status);
 
     @Transaction
     @Query("SELECT * FROM commands WHERE service=:service ORDER BY  created_at DESC")
     public List<CommandWithArticles> getCommandWithArticlesByService(String service);
+
+    @Transaction
+    @Query("SELECT * FROM commands WHERE service=:service AND status=:status ORDER BY created_at DESC")
+    public List<CommandWithArticles> getCommandWithArticlesByServiceAndStatus(String service, String status);
 
 }

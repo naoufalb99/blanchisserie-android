@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
+
 import java.util.List;
 
 import iao.master.blanchisserie.R;
@@ -19,10 +21,12 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
 
     private Clients[] clientsArray;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    private clickListener onClickListener;
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private Long clientId;
 
-        CardView cardClient;
+        MaterialCardView cardClient;
         View chipSubscribed;
         TextView textClientName,
                 textClientEmail,
@@ -32,7 +36,7 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            cardClient = (CardView) itemView.findViewById(R.id.card_client);
+            cardClient = (MaterialCardView) itemView.findViewById(R.id.card_client);
             chipSubscribed = itemView.findViewById(R.id.chip_subscribed);
             textClientName = (TextView) itemView.findViewById(R.id.text_client_name);
             textClientEmail = itemView.findViewById(R.id.text_client_email);
@@ -55,10 +59,16 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
 
         private void configureCardClient() {
             cardClient.setOnClickListener(v -> {
-                Toast.makeText(v.getContext(), "ID = " + String.valueOf(clientId), Toast.LENGTH_SHORT).show();
+                if (onClickListener != null) {
+                    cardClient.setChecked(onClickListener.execute(clientId));
+                }
             });
         }
 
+    }
+
+    public interface clickListener {
+        boolean execute(Long clientId);
     }
 
     public ClientsAdapter(Clients[] clientsArray) {
@@ -82,4 +92,7 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
         return clientsArray.length;
     }
 
+    public void setOnClickListener(clickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 }
